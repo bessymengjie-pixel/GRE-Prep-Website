@@ -124,7 +124,7 @@ PracticePage.prototype._renderSubtypes = function(type) {
 PracticePage.prototype._startSession = function(type, subtypes, count, timerEnabled) {
   var pool = type === 'verbal' ? VERBAL_QUESTIONS : QUANT_QUESTIONS;
   var filtered = pool.filter(function(q) {
-    return subtypes.indexOf(q.type || q.category) !== -1;
+    return subtypes.indexOf(q.category || q.type) !== -1;
   });
 
   if (filtered.length < 1) {

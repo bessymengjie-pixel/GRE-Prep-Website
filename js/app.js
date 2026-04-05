@@ -41,7 +41,17 @@
     }
   }
 
+  function migrateSettings() {
+    // Bump flashcardDeckSize to 30 if still on the old default of 20
+    Store.update('settings', function(s) {
+      s = s || Store.getSettings();
+      if (s.flashcardDeckSize <= 20) s.flashcardDeckSize = 30;
+      return s;
+    }, Store.getSettings());
+  }
+
   function init() {
+    migrateSettings();
     initTheme();
     bindThemeToggle();
     Store.touchStreak();
