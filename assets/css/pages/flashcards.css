@@ -1,0 +1,271 @@
+/* ─── Flashcard Page ──────────────────────────────────── */
+.fc-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+/* Progress strip */
+.fc-progress-strip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.fc-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.fc-dot.easy    { background: var(--color-success); }
+.fc-dot.hard    { background: var(--color-warning); }
+.fc-dot.again   { background: var(--color-danger); }
+.fc-dot.current { background: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary-bg); }
+
+.fc-progress-label {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* 3D Flip Card */
+.fc-card-wrap {
+  perspective: 1200px;
+  height: 380px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fc-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fc-card-wrap.flipped .fc-card-inner {
+  transform: rotateY(180deg);
+}
+
+.fc-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+
+.fc-card-back {
+  transform: rotateY(180deg);
+  align-items: flex-start;
+  text-align: left;
+  overflow-y: auto;
+  justify-content: flex-start;
+  padding-top: var(--space-6);
+}
+
+/* Front face */
+.fc-word {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.fc-pronunciation {
+  font-size: 0.9375rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin-bottom: var(--space-4);
+}
+
+.fc-pos {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+}
+
+.fc-flip-hint {
+  position: absolute;
+  bottom: var(--space-4);
+  font-size: 0.75rem;
+  color: var(--color-text-faint);
+}
+
+/* Back face */
+.fc-definition {
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+  font-weight: 500;
+}
+
+.fc-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-faint);
+  margin-bottom: var(--space-1);
+}
+
+.fc-example {
+  font-size: 0.9375rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--color-primary-light);
+}
+
+.fc-mnemonic {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  background: var(--color-surface-hover);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  width: 100%;
+}
+
+.fc-synonyms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+/* Answer buttons */
+.fc-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+
+.fc-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all var(--transition-fast);
+  border: 2px solid transparent;
+}
+
+.fc-btn-again {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+.fc-btn-again:hover { background: var(--color-danger); color: #FFF; }
+
+.fc-btn-hard {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+.fc-btn-hard:hover { background: var(--color-warning); color: #FFF; }
+
+.fc-btn-easy {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+.fc-btn-easy:hover { background: var(--color-success); color: #FFF; }
+
+.fc-btn-key {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+/* Session complete */
+.fc-complete {
+  text-align: center;
+  padding: var(--space-16) var(--space-8);
+}
+
+.fc-complete-icon {
+  font-size: 4rem;
+  margin-bottom: var(--space-4);
+}
+
+.fc-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-8);
+  margin: var(--space-6) 0;
+}
+
+.fc-stat {
+  text-align: center;
+}
+
+.fc-stat-val {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.fc-stat-lbl {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* Deck setup */
+.fc-setup {
+  max-width: 480px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.fc-setup-options {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin: var(--space-6) 0;
+}
+
+.fc-filter-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.fc-filter-btn.active, .fc-filter-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: var(--color-primary-bg);
+}

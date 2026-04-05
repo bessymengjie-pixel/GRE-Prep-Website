@@ -1,0 +1,202 @@
+/* ─── Progress Dashboard ──────────────────────────────── */
+
+/* Hero stats */
+.pg-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+}
+
+.pg-stat-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
+}
+
+.pg-stat-card:hover { transform: translateY(-2px); }
+
+.pg-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.375rem;
+}
+
+.pg-stat-icon.vocab    { background: #EEF2FF; }
+.pg-stat-icon.streak   { background: #FEF3C7; }
+.pg-stat-icon.accuracy { background: #D1FAE5; }
+.pg-stat-icon.writing  { background: #DBEAFE; }
+
+[data-theme="dark"] .pg-stat-icon.vocab    { background: rgba(79,70,229,0.15); }
+[data-theme="dark"] .pg-stat-icon.streak   { background: rgba(245,158,11,0.15); }
+[data-theme="dark"] .pg-stat-icon.accuracy { background: rgba(16,185,129,0.15); }
+[data-theme="dark"] .pg-stat-icon.writing  { background: rgba(59,130,246,0.15); }
+
+.pg-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.pg-stat-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pg-stat-sub {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+/* Charts row */
+.pg-charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+.pg-chart-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.pg-chart-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.pg-chart-canvas {
+  width: 100%;
+  display: block;
+}
+
+/* Bottom row */
+.pg-bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+/* Daily goal */
+.pg-goal-bar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.pg-goal-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--space-3);
+}
+
+.pg-goal-label {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.pg-goal-val {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* Activity feed */
+.pg-activity-feed {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.pg-activity-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+
+.pg-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.pg-activity-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.875rem;
+}
+
+.pg-activity-item:last-child { border-bottom: none; }
+
+.pg-activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.pg-activity-dot.vocab    { background: var(--color-primary); }
+.pg-activity-dot.practice { background: var(--color-success); }
+.pg-activity-dot.writing  { background: var(--color-info); }
+
+.pg-activity-text  { flex: 1; color: var(--color-text-secondary); }
+.pg-activity-date  { color: var(--color-text-faint); white-space: nowrap; }
+
+/* Accuracy chart */
+.pg-accuracy-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.pg-accuracy-item {
+  display: grid;
+  grid-template-columns: 100px 1fr 40px;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.875rem;
+}
+
+.pg-accuracy-label { color: var(--color-text-secondary); }
+.pg-accuracy-val   { color: var(--color-text-muted); text-align: right; }
+
+@media (max-width: 1024px) {
+  .pg-stats-grid  { grid-template-columns: repeat(2, 1fr); }
+  .pg-charts-row  { grid-template-columns: 1fr; }
+  .pg-bottom-row  { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  .pg-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
