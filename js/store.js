@@ -72,7 +72,7 @@ var Store = (function() {
   function getSettings() {
     return get('settings', {
       theme: 'light',
-      flashcardDeckSize: 20,
+      flashcardDeckSize: 30,
       timerEnabled: true,
       defaultQuizLength: 10
     });
