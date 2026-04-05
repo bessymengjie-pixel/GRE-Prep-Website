@@ -185,6 +185,17 @@ FlashcardPage.prototype._bindKeys = function() {
   document.addEventListener('keydown', this._keyHandler);
 };
 
+/* ── Text-to-speech pronunciation ── */
+FlashcardPage.prototype._pronounce = function(word) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  var utter = new SpeechSynthesisUtterance(word);
+  utter.lang = 'en-US';
+  utter.rate = 0.85;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+};
+
 /* ── Render card ── */
 FlashcardPage.prototype._renderCard = function() {
   if (this._index >= this._deck.length) {
@@ -229,7 +240,11 @@ FlashcardPage.prototype._renderCard = function() {
             '<div class="fc-pos">' + Utils.escapeHtml(word.pos) + '</div>',
             '<div class="fc-word">' + Utils.escapeHtml(word.word) + '</div>',
             '<div class="fc-pronunciation">' + Utils.escapeHtml(word.pronunciation || '') + '</div>',
-            '<div class="fc-flip-hint">Click to reveal · Space</div>',
+            '<button class="fc-pronounce-btn" id="fc-pronounce" title="Hear pronunciation">',
+              '<svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/></svg>',
+              ' Pronounce',
+            '</button>',
+            '<div class="fc-flip-hint">Click card to reveal · Space</div>',
           '</div>',
           '<div class="fc-card-face fc-card-back">',
             '<div class="fc-section-label">Definition</div>',
@@ -250,14 +265,27 @@ FlashcardPage.prototype._renderCard = function() {
     '</div>'
   ].join('');
 
-  this.el.querySelector('#fc-card').addEventListener('click', function() {
+  this.el.querySelector('#fc-card').addEventListener('click', function(e) {
+    // Don't flip if the pronounce button was clicked
+    if (e.target.closest('#fc-pronounce')) return;
     self._toggleFlip();
   });
+
+  var pronounceBtn = this.el.querySelector('#fc-pronounce');
+  if (pronounceBtn) {
+    pronounceBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      self._pronounce(word.word);
+    });
+  }
 
   this.el.querySelector('#fc-back-btn').addEventListener('click', function() {
     self.destroy();
     self._renderSetup();
   });
+
+  // Auto-pronounce when card appears (slight delay so it doesn't cut off)
+  setTimeout(function() { self._pronounce(word.word); }, 300);
 };
 
 FlashcardPage.prototype._toggleFlip = function() {
