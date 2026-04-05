@@ -191,19 +191,8 @@ FlashcardPage.prototype._renderCard = function() {
 
   // Build progress dots
   var vp = Store.getVocabProgress();
-  var dots = this._deck.map(function(w, i) {
-    var p = vp[w.id];
-    var cls = 'fc-dot';
-    if (i < self._index) {
-      cls += ' ' + (p && p.status === 'known' ? 'easy' : p && p.status === 'learning' ? 'hard' : 'again');
-    } else if (i === self._index) {
-      cls += ' current';
-    }
-    return '<span class="' + cls + '"></span>';
-  }, this);
-  // Correct self reference
   var self = this;
-  dots = this._deck.map(function(w, i) {
+  var dots = this._deck.map(function(w, i) {
     var p = vp[w.id];
     var cls = 'fc-dot';
     if (i < self._index) {
