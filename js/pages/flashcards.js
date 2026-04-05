@@ -113,6 +113,10 @@ FlashcardPage.prototype._renderSetup = function() {
   }).length;
   var filter = this._filter;
 
+  var settings = Store.getSettings();
+  var deckSize = settings.flashcardDeckSize || 30;
+  var sessionCount = Math.min(dueCount, deckSize);
+
   this.el.innerHTML = [
     '<div class="page-header">',
       '<h1 class="page-title">Vocabulary</h1>',
@@ -123,7 +127,7 @@ FlashcardPage.prototype._renderSetup = function() {
       '<div class="grid-3" style="margin-bottom:var(--space-8)">',
         '<div class="stat-card"><div class="stat-card-label">Total Words</div><div class="stat-card-value">' + totalWords + '</div></div>',
         '<div class="stat-card"><div class="stat-card-label">Mastered</div><div class="stat-card-value" style="color:var(--color-success)">' + mastered + '</div></div>',
-        '<div class="stat-card"><div class="stat-card-label">Due Today</div><div class="stat-card-value" style="color:var(--color-warning)">' + dueCount + '</div></div>',
+        '<div class="stat-card"><div class="stat-card-label">This Session</div><div class="stat-card-value" style="color:var(--color-primary)">' + sessionCount + '</div><div class="stat-card-sub">of ' + dueCount + ' due today</div></div>',
       '</div>',
 
       '<h3 style="font-size:1rem;font-weight:600;margin-bottom:var(--space-3)">Study Mode</h3>',
@@ -132,8 +136,9 @@ FlashcardPage.prototype._renderSetup = function() {
         '<button class="fc-filter-btn' + (filter === 'unknown' ? ' active' : '') + '" data-filter="unknown">Difficult Words</button>',
         '<button class="fc-filter-btn' + (filter === 'all' ? ' active' : '') + '" data-filter="all">All Words</button>',
       '</div>',
+      '<p style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:var(--space-2)">Sessions are capped at ' + deckSize + ' words. Complete a session to continue with remaining words.</p>',
 
-      '<button class="btn btn-primary btn-lg" id="fc-start-btn" style="margin-top:var(--space-6)">Start Session</button>',
+      '<button class="btn btn-primary btn-lg" id="fc-start-btn" style="margin-top:var(--space-5)">Start Session (' + sessionCount + ' words)</button>',
     '</div>'
   ].join('');
 
